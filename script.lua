@@ -8,9 +8,14 @@ function events.entity_init()
   bruhapi.itemView:new(
     models.model.Base.Torso.RightArmAdditional.RightShoulderAdditional.RightAdditionalItemPivot,
     bruhapi.utils.hotbarSlot(1),
-    bruhapi.itemView.config:default()
-    :withHideOnSelectedMainHand()
-    :withHideOnSelectedOffHand()
+    bruhapi.itemView.config:defaultMainHand()
+    :withHideVirtualOnSelectedMainHand()
+  )
+  bruhapi.itemView:new(
+    models.model.Base.Torso.LeftArmAdditional.LeftShoulderAdditional.LeftAdditionalItemPivot,
+    bruhapi.utils.hotbarSlot(2),
+    bruhapi.itemView.config:defaultOffHand()
+    :withHideVirtualOnSelectedOffHand()
   )
   -- bruhapi.utils.hotbarSlot(slot: 1..9)
   -- bruhapi.utils.armorSlot(slot: 1..4)

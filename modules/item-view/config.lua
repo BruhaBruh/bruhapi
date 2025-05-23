@@ -1,8 +1,8 @@
 local viewConfig = require("modules.item-view.view-config")
 
 ---@class BruhAPI.ItemView.Config
----@field hideOnSelectedMainHand boolean
----@field hideOnSelectedOffHand boolean
+---@field hideVirtualOnSelectedMainHand boolean
+---@field hideVirtualOnSelectedOffHand boolean
 ---@field block BruhAPI.ItemView.ViewConfig
 ---@field item BruhAPI.ItemView.ViewConfig
 ---@field tool BruhAPI.ItemView.ViewConfig
@@ -33,8 +33,8 @@ end
 ---@return BruhAPI.ItemView.Config
 function itemViewConfig:new()
   local instance = setmetatable({}, itemViewConfig)
-  instance.hideOnSelectedMainHand = false
-  instance.hideOnSelectedOffHand = false
+  instance.hideVirtualOnSelectedMainHand = false
+  instance.hideVirtualOnSelectedOffHand = false
   instance.block = viewConfig:new()
   instance.item = viewConfig:new()
   instance.tool = viewConfig:new()
@@ -47,7 +47,148 @@ function itemViewConfig:new()
 end
 
 ---@return BruhAPI.ItemView.Config
-function itemViewConfig:default()
+function itemViewConfig:defaultMainHand()
+  local config = itemViewConfig:new()
+
+  local blockConfig = viewConfig:new()
+      :withScale(0.38)
+      :withRot(-25, 45, -17)
+      :withPos(0, 0.4, -2.3)
+  local itemConfig = viewConfig:new()
+      :withScale(0.5)
+      :withRot(-90, 0, 180)
+      :withPos(0, 1, -2.75)
+  local toolConfig = viewConfig:new()
+      :withScale(0.85)
+      :withRot(-90, -45, -90)
+      :withPos(0, 1.5, -4)
+  local armorConfig = viewConfig:new()
+  local bedConfig = viewConfig:new()
+      :withScale(0.23)
+      :withRot(-50, -25, 15)
+      :withPos(1, 0.4, -4.2)
+  local bannerConfig = viewConfig:new()
+      :withScale(0.4)
+      :withRot(-90, 0, 90)
+      :withPos(0, 0, -2)
+  local spyglassConfig = viewConfig:new()
+      :withScale(1)
+      :withRot(-90, 0, -90)
+      :withPos(0, 0, 2)
+  local bowConfig = viewConfig:new()
+      :withScale(0.9)
+      :withRot(-90, -45, -90)
+      :withPos(-1, 2.2, 2)
+  local crossbowConfig = viewConfig:new()
+      :withScale(0.95)
+      :withRot(0, 0, -125)
+      :withPos(1, -4, 0)
+  local shieldConfig = viewConfig:new()
+      :withScale(1)
+      :withRot(-90, 0, -270)
+      :withPos(10, -4, -6)
+  local tridentConfig = viewConfig:new()
+      :withScale(1)
+      :withRot(-90, 0, -235)
+      :withPos(11, -0.5, -18)
+
+  return config
+      :withBlockConfig(blockConfig)
+      :withItemConfig(itemConfig)
+      :withToolConfig(toolConfig)
+      :withFoodConfig(itemConfig)
+      :withArmorConfig(itemConfig)
+      :withExactConfig(
+        itemConfig,
+        "minecraft:lantern",
+        "minecraft:soul_lantern",
+        "minecraft:chain",
+        "minecraft:iron_bars",
+        "minecraft:pointed_dripstone",
+        "minecraft:brown_mushroom",
+        "minecraft:red_mushroom",
+        "minecraft:crimson_fungus", "minecraft:warped_fungus",
+        "minecraft:short_grass",
+        "minecraft:tall_grass",
+        "minecraft:dead_bush",
+        "minecraft:sugar_cane",
+        "minecraft:bamboo",
+        "minecraft:cocoa_beans",
+        "minecraft:pitcher_pod",
+        "minecraft:kelp",
+        "minecraft:nether_wart",
+        "minecraft:lily_pad",
+        "minecraft:seagrass",
+        "minecraft:sea_pickle",
+        "minecraft:poppy",
+        "minecraft:dandelion",
+        "minecraft:blue_orchid",
+        "minecraft:allium",
+        "minecraft:azure_bluet",
+        "minecraft:oxeye_daisy",
+        "minecraft:cornflower", "minecraft:lily_of_the_valley",
+        "minecraft:wither_rose",
+        "minecraft:pink_petals",
+        "minecraft:sunflower",
+        "minecraft:lilac",
+        "minecraft:rose_bush",
+        "minecraft:peony",
+        "minecraft:pitcher_plant",
+        "minecraft:crimson_roots",
+        "minecraft:warped_roots",
+        "minecraft:nether_sprouts", "minecraft:hanging_roots",
+        "minecraft:glow_lichen",
+        "minecraft:frogspawn",
+        "minecraft:turtle_egg",
+        "minecraft:sniffer_egg",
+        "minecraft:cobweb",
+        "minecraft:sculk_vein",
+        "minecraft:flower_pot",
+        "minecraft:brewing_stand",
+        "minecraft:cauldron",
+        "minecraft:bell",
+        "minecraft:ladder",
+        "minecraft:redstone",
+        "minecraft:repeater",
+        "minecraft:comparator",
+        "minecraft:lever",
+        "minecraft:tripwire_hook",
+        "minecraft:hopper",
+        "minecraft:string"
+      )
+      :withExactConfig(spyglassConfig, "minecraft:spyglass")
+      :withExactConfig(bowConfig, "minecraft:bow")
+      :withExactConfig(crossbowConfig, "minecraft:crossbow")
+      :withExactConfig(shieldConfig, "minecraft:shield")
+      :withExactConfig(tridentConfig, "minecraft:trident")
+      :withContainsConfig(blockConfig, "coral_block")
+      :withContainsConfig(
+        itemConfig,
+        "door",
+        "campfire",
+        "pane",
+        "candle",
+        "_bud",
+        "sapling",
+        "propagule",
+        "vine",
+        "fern",
+        "tulip",
+        "seeds",
+        "berries",
+        "_coral",
+        "torch",
+        "sign",
+        "rail",
+        "pattern"
+      )
+      :withContainsConfig(toolConfig, "sword", "mace")
+      :withContainsConfig(bedConfig, "bed")
+      :withContainsConfig(bannerConfig, "banner")
+end
+
+---@return BruhAPI.ItemView.Config
+function itemViewConfig:defaultOffHand()
   local config = itemViewConfig:new()
 
   local blockConfig = viewConfig:new()
@@ -190,21 +331,21 @@ end
 ---@overload fun(): BruhAPI.ItemView.Config
 ---@param hide boolean
 ---@return BruhAPI.ItemView.Config
-function itemViewConfig:withHideOnSelectedMainHand(hide)
+function itemViewConfig:withHideVirtualOnSelectedMainHand(hide)
   if hide == nil then
     hide = true
   end
-  return with(self, "hideOnSelectedMainHand", hide)
+  return with(self, "hideVirtualOnSelectedMainHand", hide)
 end
 
 ---@overload fun(): BruhAPI.ItemView.Config
 ---@param hide boolean
 ---@return BruhAPI.ItemView.Config
-function itemViewConfig:withHideOnSelectedOffHand(hide)
+function itemViewConfig:withHideVirtualOnSelectedOffHand(hide)
   if hide == nil then
     hide = true
   end
-  return with(self, "hideOnSelectedOffHand", hide)
+  return with(self, "hideVirtualOnSelectedOffHand", hide)
 end
 
 ---@param config BruhAPI.ItemView.ViewConfig

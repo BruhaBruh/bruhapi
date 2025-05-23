@@ -128,9 +128,9 @@ function events.tick()
     end
 
     local visible = true
-    if part.config.hideOnSelectedMainHand and not selectedMainHand.id == slotItem.id then
+    if part.config.hideVirtualOnSelectedMainHand and selectedMainHand == slotItem.id then
       visible = false
-    elseif part.config.hideOnSelectedOffHand and selectedOffHand.id == slotItem.id then
+    elseif part.config.hideVirtualOnSelectedOffHand and selectedOffHand == slotItem.id then
       visible = false
     end
     part.itemTask:setVisible(visible)
