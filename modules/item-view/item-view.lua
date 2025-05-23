@@ -48,7 +48,7 @@ function events.tick()
     slotItem.id = newItem.id
     slotItem.item = newItem
     if newItem:isTool() then
-      slotItem.type = "food"
+      slotItem.type = "tool"
     elseif newItem:isFood() then
       slotItem.type = "food"
     elseif newItem:isArmor() then

@@ -52,6 +52,7 @@ function viewConfig:withScale(x, y, z)
 end
 
 ---@overload fun(Vector3): BruhAPI.ItemView.ViewConfig
+---@overload fun(number): BruhAPI.ItemView.ViewConfig
 ---@param x number
 ---@param y number
 ---@param z number
@@ -63,12 +64,15 @@ function viewConfig:withRot(x, y, z)
     rot = x
   elseif type(x) == "number" and y and z then
     rot = vec(x, y, z)
+  elseif type(x) == "number" then
+    rot = vec(x, x, x)
   end
 
   return with(self, "rot", rot)
 end
 
 ---@overload fun(Vector3): BruhAPI.ItemView.ViewConfig
+---@overload fun(number): BruhAPI.ItemView.ViewConfig
 ---@param x number
 ---@param y number
 ---@param z number
@@ -80,6 +84,8 @@ function viewConfig:withPos(x, y, z)
     pos = x
   elseif type(x) == "number" and y and z then
     pos = vec(x, y, z)
+  elseif type(x) == "number" then
+    pos = vec(x, x, x)
   end
 
   return with(self, "pos", pos)
